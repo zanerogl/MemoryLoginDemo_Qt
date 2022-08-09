@@ -5,6 +5,8 @@
 #include <QtCore>
 #include <QSettings>
 #include <QDebug>
+#include "config.h"
+#include "userinfo.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
@@ -24,24 +26,14 @@ private:
     Ui::Widget *ui;
 
     /**
-     * @brief saveConfig    保存配置文件
+     * @brief saveConfig    保存配置文件和用户信息
      */
     void saveConfig();
 
     /**
-     * @brief loadConfig    加载配置文件
+     * @brief loadConfig    加载配置文件和用户信息
      */
     void loadConfig();
-
-    /**
-     * @brief addUserInfo   根据记住密码按钮是否勾选添加用户密码
-     */
-    void saveUserInfo();
-
-    /**
-     * @brief loadUserInfo   加载上次登录用户的用户名
-     */
-    void loadUserInfo();
 
     /**
      * @brief closeEvent    关闭事件，关闭事件触发时保存数据
@@ -49,8 +41,17 @@ private:
      */
     void closeEvent(QCloseEvent *event) override;
 
+    /**
+     * @brief memoryLogin   记忆登陆，用户点击Login后保存用户名，根据是否勾选记住秘密保存密码
+     */
+    void memoryLogin();
+
     QString userName;
     QString userPassword;
+
+    Config *m_config;
+
+    UserInfo *m_userInfo;
 
 };
 #endif // WIDGET_H
